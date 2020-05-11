@@ -55,8 +55,8 @@ cc.Class({
         fd.dx = (Math.random() - 0.5);
         fd.dy = (Math.random() - 0.5);
         fd.absx = (Math.random()-0.5) * this.universeSize * 2;
-        fd.absy = pl.absy + ((Math.random()-0.5) * this.universeSize * 2) + this.node.height*2;
-        var s = (Math.pow(Math.random(),2)+0.125) * pl.defaultSize * (16/9); 
+        fd.absy = pl.absy + ((Math.random()-0.5) * this.universeSize * 2);
+        var s = (Math.pow(Math.random(),2)+0.125) * pl.size * (16/9); 
         fd.node.width = s
         fd.node.height = s
         fd.size = s
@@ -66,29 +66,11 @@ cc.Class({
         fd.node.x = fd.absx - pl.absx;
         fd.node.y = fd.absy - pl.absy;
 
+        fd.node.getComponent(cc.CircleCollider).radius = 0.7 * (fd.size/2);
+
         this.node.addChild(newFood);
 
     },
-
-    foodIntersect: function (x, y){
-        if(x == y){
-            return false;
-        } else {
-            i = this.allFood[x];
-            j = this.allFood[y];
-            var dist = Math.sqrt(Math.pow((i.absx - j.absx), 2) + Math.pow((i.absy- j.absy), 2));
-            if(dist <= i.size+j.size){
-                if(i.size < j.size){
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-    },
-    
 
     start () {
 

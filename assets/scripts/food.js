@@ -35,14 +35,6 @@ cc.Class({
         }
     },
 
-    getPlayerDistance: function () {
-        // judge the distance according to the position of the player node
-        var playerPos = this.game.player.getPosition();
-        // calculate the distance between two nodes according to their positions
-        var dist = this.node.position.sub(playerPos).mag();
-        return dist;
-    },
-
     onPicked: function() {
         // var playerArea = Math.pow(this.player.currentSize, 2);
         // var foodArea = Math.pow(this.size, 2);
@@ -55,21 +47,6 @@ cc.Class({
         this.game.spawnNewStar(this.id);
         // then destroy the current star's node
         
-    },
-
-    foodIntersect: function (x, y){
-        if(x == y){
-            return false;
-        } else {
-            i = this.allFood[x];
-            j = this.allFood[y];
-            var dist = Math.sqrt(Math.pow((i.absx - j.absx), 2) + Math.pow((i.absy- j.absy), 2));
-            if(dist <= i.size+j.size){
-                return true;
-            } else {
-                return false;
-            }
-        }
     },
 
     update: function (dt) {
@@ -85,21 +62,30 @@ cc.Class({
 
         uS = this.game.universeSize;
 
-        // if(this.absx < -uS + this.size/2){
-        //     this.absx = -uS + this.size/2;
-        //     this.dx = -this.dx;
+        // if(this.absx < -uS - this.size/2){
+        //     this.onPicked();
         // }
-        // if(this.absx > uS - this.size/2){
-        //     this.absx = uS - this.size/2;
-        //     this.dx = -this.dx;
+        // if(this.absx > uS + this.size/2){
+        //     this.onPicked();
         // }
 
-        if(this.absx < -uS - this.size/2){
-            this.onPicked();
+        var rad = this.getComponent(cc.CircleCollider).radius
+
+        if(this.absx < -uS + rad){
+            this.absx = -uS + rad;
+            this.dx = -this.dx;
         }
-        if(this.absx > uS + this.size/2){
-            this.onPicked();
+        if(this.absx > uS - rad){
+            this.absx = uS - rad;
+            this.dx = -this.dx;
         }
+
+
+        var manager = cc.director.getCollisionManager();
+        manager.enabled = true;
+        manager.enabledDrawBoundingBox = true;
+        manager.enabledDebugDraw = true;
+
 
         // if(this.node.y < -uS + this.size/2){
         //     this.node.y= -uS + this.size/2;
@@ -110,11 +96,60 @@ cc.Class({
         //     this.dy = -this.dy;
         // }
 
-        // if (this.getPlayerDistance() < (this.size + this.player.defaultSize)/2) {
+        // if (this.getPlayerDistance() < (this.size + this.player.size)/2) {
         //     // invoke collecting behavior
         //     this.onPicked();
         //     return;
         // }
+    },
+
+    onCollisionEnter: function (other, self) {
+        if(other.node.group == "default"){
+            other_obj = other.node.getComponent('food');
+
+            if(this.id < other_obj.id){
+                console.log('collision occured');
+
+                var this_dx = this.dx;
+                var this_dy = this.dy;
+                var that_dx = other_obj.dx;
+                var that_dy = other_obj.dy;
+
+                var this_absx = this.absx;
+                var this_absy = this.absy;
+                var that_absx = other_obj.absx;
+                var that_absy = other_obj.absy;
+
+                var this_mass = this.size * this.size;
+                var that_mass = other_obj.size * other_obj.size;
+
+                var normal_x = that_absx - this_absx;
+                var normal_y = that_absy - this_absy;
+
+
+                var norm = Math.sqrt((normal_x*normal_x) + (normal_y*normal_y));
+                normal_x /= norm;
+                normal_y /= norm; //points from center of this to center of that
+
+                var this_normal = this_dx * normal_x + this_dy * normal_y;
+                var that_normal = that_dx * normal_x + that_dy * normal_y;
+                var this_perp_x = this_dx - this_normal * normal_x;
+                var this_perp_y = this_dy - this_normal * normal_y;
+                var that_perp_x = that_dx - that_normal * normal_x;
+                var that_perp_y = that_dy - that_normal * normal_y;
+                
+                var plus = this_mass + that_mass;
+                var minus = this_mass - that_mass;
+
+                var new_this_normal = (minus/plus)*this_normal + (2*that_mass/plus)*that_normal
+                var new_that_normal = (2*this_mass/plus)*this_normal - (minus/plus)*that_normal
+
+                this.dx = this_perp_x + new_this_normal*normal_x
+                this.dy = this_perp_y + new_this_normal*normal_y
+                other_obj.dx = that_perp_x + new_that_normal*normal_x;
+                other_obj.dy = that_perp_y + new_that_normal*normal_y;
+            }
+        }
     },
 
     start () {
