@@ -21,5 +21,6 @@ cc.Class({
 
     update (dt) {
         this.node.x = -this.player.absx;
+        // this.node.y = -this.player.absy;
     },
 });

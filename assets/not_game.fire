@@ -57,7 +57,8 @@
     "_is3DNode": true,
     "_groupIndex": 0,
     "groupIndex": 0,
-    "_id": "afUA5+I+xFU7/8OeGNDj09"
+    "autoReleaseAssets": false,
+    "_id": "b8a11797-6e57-44a4-9c15-327da4083e42"
   },
   {
     "__type__": "cc.Node",
@@ -308,8 +309,8 @@
       }
     ],
     "_useOriginalSize": true,
-    "_string": "Tap/Click to propel your character.\n\nEat green circles to grow bigger.\n\nAvoid getting eaten by red circles. \n\nIf you do not eat you will shrink.\n\nTap/Click anywhere to begin.",
-    "_N$string": "Tap/Click to propel your character.\n\nEat green circles to grow bigger.\n\nAvoid getting eaten by red circles. \n\nIf you do not eat you will shrink.\n\nTap/Click anywhere to begin.",
+    "_string": "Tap/Click to propel your character.\n\nAvoid the red line for as long\nas you can.\n\nTap/Click anywhere to begin.",
+    "_N$string": "Tap/Click to propel your character.\n\nAvoid the red line for as long\nas you can.\n\nTap/Click anywhere to begin.",
     "_fontSize": 45,
     "_lineHeight": 40,
     "_enableWrapText": true,
