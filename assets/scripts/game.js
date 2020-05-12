@@ -1,10 +1,3 @@
-// Learn cc.Class:
-//  - https://docs.cocos.com/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
 cc.Class({
     extends: cc.Component,
     
@@ -33,55 +26,46 @@ cc.Class({
             default: 500,
             type: cc.Integer,
         },
+        score: {
+            default: null,
+            type: cc.Label,
+        },
+        maxy: {
+            default: -1,
+            type: cc.Integer,
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
         this.background.getComponent('background').player = this.player.getComponent('player');
+        this.background.getComponent('background').game = this;
         this.line.getComponent('line').player = this.player.getComponent('player');
+        this.line.getComponent('line').game = this;
         for(var i = 0; i < this.numFood; i++){
-            this.spawnNewStar(i);
+            this.spawn(i);
         }
     },
 
-    spawnNewStar: function(id_num) {
-        var newFood = cc.instantiate(this.foodPrefab);
+    spawn: function(id_num) {
+        var newThing = cc.instantiate(this.foodPrefab);
         
         var pl = this.player.getComponent('player');
-        var fd =  newFood.getComponent('food');
+        var fd = newThing.getComponent('food');
         var ln = this.line.getComponent("line");
-        // put the newly added node under the Canvas node
-        
-        // set up a random position for the star
-        
-        // Staging a reference of Game object on a star component
+
         fd.game = this;
         pl.game = this;
         fd.line = ln;
         fd.player = pl;
-
-        // fd.dx = (Math.random() - 0.5);
-        // fd.dy = (Math.random() - 0.5);
-        // fd.absx = (Math.random()-0.5) * this.universeSize * 2;
-        // fd.absy = pl.absy + ((Math.random()-0.5) * this.universeSize * 2);
-        // var s = (Math.pow(Math.random(),2)+0.125) * pl.size * (16/9); 
-        // fd.node.width = s
-        // fd.node.height = s
-        // fd.size = s
-        // //up to 2.25 times as big as player, half of them are smaller than the player, all are at least half the size of the player 
         fd.id = id_num;
-        // fd.node.x = fd.absx - pl.absx;
-        // fd.node.y = fd.absy - pl.absy;
-
-        // fd.node.getComponent(cc.CircleCollider).radius = 0.75 * (s/2);
-        fd.absy = ln.absy - this.universeSize;
-        this.node.addChild(newFood);
-
+        fd.absy = ln.absy - this.universeSize; //food will take care of spawning
+        this.node.addChild(newThing);
     },
 
     elastic: function (a, b){
-        console.log("collision occured");
+        // console.log("collision occured");
 
         var a_dx = a.dx;
         var a_dy = a.dy;
@@ -125,5 +109,14 @@ cc.Class({
 
     start () {
 
+    },
+
+    update: function (dt) {
+        var pl = this.player.getComponent('player');
+        var ln = this.line.getComponent("line");
+        this.maxy = Math.trunc(Math.max(this.maxy/pl.size, pl.absy/pl.size));
+        // this.score.string = ("Line Loc: " + Math.trunc((ln.absy - pl.absy)/pl.size) + " Score: " + this.maxy);
+        this.score.string = (" Score: " + this.maxy);
+        
     },
 });

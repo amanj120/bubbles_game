@@ -78,16 +78,19 @@
         "__id__": 8
       },
       {
-        "__id__": 12
+        "__id__": 10
+      },
+      {
+        "__id__": 14
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 15
+        "__id__": 17
       },
       {
-        "__id__": 16
+        "__id__": 18
       }
     ],
     "_prefab": null,
@@ -212,9 +215,9 @@
     "_clearFlags": 7,
     "_backgroundColor": {
       "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
+      "r": 9,
+      "g": 9,
+      "b": 54,
       "a": 255
     },
     "_depth": -1,
@@ -258,7 +261,7 @@
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
-      "g": 255,
+      "g": 127,
       "b": 255,
       "a": 255
     },
@@ -317,7 +320,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "31a31555-c320-4ae9-b318-031f4e59dd30"
+      "__uuid__": "57b2fb2e-43dd-4f71-a483-fcdd1c2b9409"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -345,7 +348,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Player",
+    "_name": "ScoreLabel",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -355,12 +358,106 @@
     "_components": [
       {
         "__id__": 9
-      },
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 109.96,
+      "height": 50.4
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        0,
+        280,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "2a9VtxtMFLrrVNtJ64W0WM"
+  },
+  {
+    "__type__": "cc.Label",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 8
+    },
+    "_enabled": true,
+    "_materials": [
       {
-        "__id__": 10
-      },
+        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+      }
+    ],
+    "_useOriginalSize": false,
+    "_string": "Label",
+    "_N$string": "Label",
+    "_fontSize": 40,
+    "_lineHeight": 40,
+    "_enableWrapText": true,
+    "_N$file": null,
+    "_isSystemFontUsed": true,
+    "_spacingX": 0,
+    "_batchAsBitmap": false,
+    "_styleFlags": 0,
+    "_underlineHeight": 0,
+    "_N$horizontalAlign": 1,
+    "_N$verticalAlign": 1,
+    "_N$fontFamily": "Consolas",
+    "_N$overflow": 0,
+    "_N$cacheMode": 0,
+    "_id": "ddRZcdl5tOLKDthSjuk6tn"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Player",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
       {
         "__id__": 11
+      },
+      {
+        "__id__": 12
+      },
+      {
+        "__id__": 13
       }
     ],
     "_prefab": null,
@@ -416,7 +513,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 8
+      "__id__": 10
     },
     "_enabled": true,
     "_materials": [
@@ -448,7 +545,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 8
+      "__id__": 10
     },
     "_enabled": true,
     "dx": 0,
@@ -464,7 +561,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 8
+      "__id__": 10
     },
     "_enabled": true,
     "tag": 0,
@@ -487,19 +584,19 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 13
+        "__id__": 15
       },
       {
-        "__id__": 14
+        "__id__": 16
       }
     ],
     "_prefab": null,
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
+      "r": 9,
+      "g": 9,
+      "b": 54,
       "a": 255
     },
     "_contentSize": {
@@ -546,7 +643,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 12
+      "__id__": 14
     },
     "_enabled": true,
     "_materials": [
@@ -557,7 +654,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "31a31555-c320-4ae9-b318-031f4e59dd30"
+      "__uuid__": "57b2fb2e-43dd-4f71-a483-fcdd1c2b9409"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -578,7 +675,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 12
+      "__id__": 14
     },
     "_enabled": true,
     "absy": 0,
@@ -614,16 +711,20 @@
       "__uuid__": "b4d062c5-7872-44b5-8e33-c543c405d818"
     },
     "player": {
-      "__id__": 8
+      "__id__": 10
     },
     "line": {
-      "__id__": 12
+      "__id__": 14
     },
     "background": {
       "__id__": 5
     },
-    "numFood": 50,
-    "universeSize": 500,
+    "numFood": 60,
+    "universeSize": 600,
+    "score": {
+      "__id__": 9
+    },
+    "maxy": -1,
     "_id": "09O3pfGitGa4CBlS2S7ST0"
   }
 ]

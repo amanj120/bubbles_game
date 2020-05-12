@@ -1,10 +1,3 @@
-// Learn cc.Class:
-//  - https://docs.cocos.com/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
 cc.Class({
     extends: cc.Component,
 
@@ -47,8 +40,17 @@ cc.Class({
             var temp_x = loc.x - cc.winSize.width/2;
             var temp_y = loc.y - cc.winSize.height/2;
             var n = this.norm(temp_x, temp_y);
-            this.dx -= temp_x/n;
-            this.dy -= temp_y/n;
+            this.dx -= 2*temp_x/n;
+            this.dy -= 2*temp_y/n;
+        });
+
+        this.node.parent.on(cc.Node.EventType.TOUCH_START,(e)=>{
+            var loc = e.getLocation()
+            var temp_x = loc.x - cc.winSize.width/2;
+            var temp_y = loc.y - cc.winSize.height/2;
+            var n = this.norm(temp_x, temp_y);
+            this.dx -= 2*temp_x/n;
+            this.dy -= 2*temp_y/n;
         });
     },
 
@@ -60,12 +62,11 @@ cc.Class({
         
     },
 
-    update (dt) {
+    update: function (dt) {
         this.absx += this.dx;
         this.absy += this.dy;
 
-        uS = this.game.universeSize;
-
+        var uS = this.game.universeSize;
         var rad = this.getComponent(cc.CircleCollider).radius
 
         if(this.absx < -uS + rad){
@@ -77,14 +78,6 @@ cc.Class({
             this.dx = -this.dx;
         }
 
-        // if(this.absy < -uS + rad){
-        //     this.absy = -uS + rad;
-        //     this.dy = -this.dy;
-        // }
-        // if(this.absy > uS - rad){
-        //     this.absy = uS - rad;
-        //     this.dy = -this.dy;
-        // }
         this.dx *= this.friction;
         this.dy *= this.friction;
     },

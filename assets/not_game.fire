@@ -309,8 +309,8 @@
       }
     ],
     "_useOriginalSize": true,
-    "_string": "Tap/Click to propel your character.\n\nAvoid the red line for as long\nas you can.\n\nTap/Click anywhere to begin.",
-    "_N$string": "Tap/Click to propel your character.\n\nAvoid the red line for as long\nas you can.\n\nTap/Click anywhere to begin.",
+    "_string": "Tap/Click to propel yourself.\n \nAvoid falling off the bottom edge.\n\nTap/Click anywhere to begin.",
+    "_N$string": "Tap/Click to propel yourself.\n \nAvoid falling off the bottom edge.\n\nTap/Click anywhere to begin.",
     "_fontSize": 45,
     "_lineHeight": 40,
     "_enableWrapText": true,

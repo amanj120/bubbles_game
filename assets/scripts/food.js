@@ -1,10 +1,3 @@
-// Learn cc.Class:
-//  - https://docs.cocos.com/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
 cc.Class({
     extends: cc.Component,
 
@@ -32,7 +25,7 @@ cc.Class({
         id: {
             type: cc.Integer,
             default: -1,
-        }
+        },
     },
 
     onLoad: function(){
@@ -62,29 +55,25 @@ cc.Class({
             this.dx = -this.dx;
         }
 
-        // if(this.absy < -uS + rad){
-        //     this.absy = -uS + rad;
-        //     this.dy = -this.dy;
-        // }
-        // if(this.absy > uS - rad){
-        //     this.absy = uS - rad;
-        //     this.dy = -this.dy;
-        // }
-
-        if(this.absy - this.line.absy <= -rad){
-            this.dx = (Math.random() - 0.5);
-            this.dy = (Math.random() - 0.5);
-            this.absx = (Math.random()-0.5) * uS * 2;
-            this.absy = this.player.absy + (Math.random()*2 + 1) * this.node.parent.height;
-            this.node.x = this.absx - this.player.absx;
-            this.node.y = this.absy - this.player.absy;
-            var s = (Math.pow(Math.random(),2)+0.125) * this.player.size * (16/9); 
-            this.node.width = s
-            this.node.height = s
-            this.size = s
-            this.node.getComponent(cc.CircleCollider).radius = 0.75 * (s/2);
+        if(this.absy - this.line.absy <= -rad || this.absy - this.player.absy >= (5 * this.node.parent.height)){//too far below or above
+            this.respawn();
         }
 
+    },
+
+    respawn() {
+        this.absx = (Math.random()-0.5) * uS * 2;
+        this.absy = this.player.absy + (Math.random()*2 + 1) * this.node.parent.height;
+        this.node.x = this.absx - this.player.absx;
+        this.node.y = this.absy - this.player.absy;
+        var s = (Math.pow(Math.random(),2)+(1/4)) * this.player.size * 2;
+        var speedFactor = Math.pow((2 * this.player.size/s),2);  //smaller things have about the same kinetic energy
+        this.dx = (Math.random() - 0.5) * speedFactor;
+        this.dy = (Math.random() - 0.5) * speedFactor;
+        this.node.width = s
+        this.node.height = s
+        this.size = s
+        this.node.getComponent(cc.CircleCollider).radius = 0.75 * (s/2);
     },
 
     onCollisionEnter: function (other, self) {
@@ -93,6 +82,19 @@ cc.Class({
             b = other.node.getComponent('food');
             if(a.id < b.id){
                 this.game.elastic(a, b);
+            }
+        }
+    },
+
+    onCollisionStay: function (other, self) {
+        if(other.node.group == "default"){
+            a = this.node.getComponent('food')
+            b = other.node.getComponent('food');
+            var dist = Math.sqrt(Math.pow((a.absx-b.absx),2) + Math.pow((a.absy-b.absy),2));
+            var radii = a.node.getComponent(cc.CircleCollider).radius + b.node.getComponent(cc.CircleCollider).radius;
+            if(dist-radii < -3 && a.id < b.id){
+                //if they are more than 3 pixels into each other then delete, otherwise it might just be a bounce
+                this.respawn();
             }
         }
     },

@@ -1,10 +1,3 @@
-// Learn cc.Class:
-//  - https://docs.cocos.com/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
 cc.Class({
     extends: cc.Component,
 
@@ -13,14 +6,16 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad () {
+        this.node.width = this.game.universeSize * 2;
+        this.node.height = this.game.node.height;
+    },
 
     start () {
 
     },
 
-    update (dt) {
+    update: function (dt) {
         this.node.x = -this.player.absx;
-        // this.node.y = -this.player.absy;
     },
 });
