@@ -42,9 +42,10 @@ cc.Class({
         this.node.x = this.absx - this.player.absx;
         this.node.y = this.absy - this.player.absy;
 
-        uS = this.game.universeSize;
+        var g = this.game;
+        var uS = g.universeSize;
 
-        var rad = this.getComponent(cc.CircleCollider).radius
+        var rad = this.getComponent(cc.CircleCollider).radius;
 
         if(this.absx < -uS + rad){
             this.absx = -uS + rad;
@@ -62,6 +63,8 @@ cc.Class({
     },
 
     respawn() {
+        var g = this.game;
+        var uS = g.universeSize;
         this.absx = (Math.random()-0.5) * uS * 2;
         this.absy = this.player.absy + (Math.random()*2 + 1) * this.node.parent.height;
         this.node.x = this.absx - this.player.absx;
@@ -70,16 +73,16 @@ cc.Class({
         var speedFactor = Math.pow((2 * this.player.size/s),2);  //smaller things have about the same kinetic energy
         this.dx = (Math.random() - 0.5) * speedFactor;
         this.dy = (Math.random() - 0.5) * speedFactor;
-        this.node.width = s
-        this.node.height = s
-        this.size = s
+        this.node.width = s;
+        this.node.height = s;
+        this.size = s;
         this.node.getComponent(cc.CircleCollider).radius = 0.75 * (s/2);
     },
 
     onCollisionEnter: function (other, self) {
         if(other.node.group == "default"){
-            a = this.node.getComponent('food')
-            b = other.node.getComponent('food');
+            var a = this.node.getComponent('food');
+            var b = other.node.getComponent('food');
             if(a.id < b.id){
                 this.game.elastic(a, b);
             }
@@ -88,8 +91,8 @@ cc.Class({
 
     onCollisionStay: function (other, self) {
         if(other.node.group == "default"){
-            a = this.node.getComponent('food')
-            b = other.node.getComponent('food');
+            var a = this.node.getComponent('food');
+            var b = other.node.getComponent('food');
             var dist = Math.sqrt(Math.pow((a.absx-b.absx),2) + Math.pow((a.absy-b.absy),2));
             var radii = a.node.getComponent(cc.CircleCollider).radius + b.node.getComponent(cc.CircleCollider).radius;
             if(dist-radii < -3 && a.id < b.id){

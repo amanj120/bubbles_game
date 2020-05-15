@@ -28,30 +28,27 @@ cc.Class({
         },
     },
 
-    // LIFE-CYCLE CALLBACKS:
+    playaMoveTouch (event) {
+        var touches = event.getTouches();
+        var loc = touches[0].getLocation();
+        var temp_x = loc.x - cc.winSize.width/2;
+        var temp_y = loc.y - cc.winSize.height/2;
+        var n = this.norm(temp_x, temp_y);
+        this.dx -= 2*temp_x/n;
+        this.dy -= 2*temp_y/n;
+    },
+
+    nuffin (event) {
+        this.dx *= 1;
+    },
 
     onLoad () {
         this.node.width = this.size;
         this.node.height = this.size;
         this.node.getComponent(cc.CircleCollider).radius = 0.75 * (this.size/2);
-
-        this.node.parent.on(cc.Node.EventType.MOUSE_DOWN,(e)=>{
-            var loc = e.getLocation()
-            var temp_x = loc.x - cc.winSize.width/2;
-            var temp_y = loc.y - cc.winSize.height/2;
-            var n = this.norm(temp_x, temp_y);
-            this.dx -= 2*temp_x/n;
-            this.dy -= 2*temp_y/n;
-        });
-
-        this.node.parent.on(cc.Node.EventType.TOUCH_START,(e)=>{
-            var loc = e.getLocation()
-            var temp_x = loc.x - cc.winSize.width/2;
-            var temp_y = loc.y - cc.winSize.height/2;
-            var n = this.norm(temp_x, temp_y);
-            this.dx -= 2*temp_x/n;
-            this.dy -= 2*temp_y/n;
-        });
+        this.node.parent.on(cc.Node.EventType.TOUCH_START, this.playaMoveTouch, this);
+        // this.node.parent.on(cc.Node.EventType.TOUCH_MOVE, this.nuffin, this);
+        // this.node.parent.on(cc.Node.EventType.TOUCH_END, this.nuffin, this);
     },
 
     norm(x,y){
@@ -66,8 +63,9 @@ cc.Class({
         this.absx += this.dx;
         this.absy += this.dy;
 
-        var uS = this.game.universeSize;
-        var rad = this.getComponent(cc.CircleCollider).radius
+        var g = this.game;
+        var uS = g.universeSize;
+        var rad = this.getComponent(cc.CircleCollider).radius;
 
         if(this.absx < -uS + rad){
             this.absx = -uS + rad;
@@ -83,8 +81,8 @@ cc.Class({
     },
 
     onCollisionEnter: function (other, self) {
-        a = this.node.getComponent('player')
-        b = other.node.getComponent('food');
+        var a = this.node.getComponent('player');
+        var b = other.node.getComponent('food');
         this.game.elastic(a, b);
     },
 

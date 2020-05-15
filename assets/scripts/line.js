@@ -25,7 +25,7 @@ cc.Class({
     update: function (dt) {
         this.absy += this.dy;
         this.node.y = this.absy - this.player.absy;
-        this.dy = Math.min(3 + (this.game.maxy/250), 7) //max speed is 8, but game gets harder as you get better
+        this.dy = Math.min(3 + (this.game.maxy/250), 8) //max speed is 8, but game gets harder as you get better
 
         if(this.absy < this.player.absy - (7 * this.player.size)){
             this.absy = this.player.absy -  (7 * this.player.size);

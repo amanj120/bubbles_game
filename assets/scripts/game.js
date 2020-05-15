@@ -39,10 +39,21 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
-        this.background.getComponent('background').player = this.player.getComponent('player');
+        var playa = this.player.getComponent('player');
+        this.background.getComponent('background').player = playa;
         this.background.getComponent('background').game = this;
-        this.line.getComponent('line').player = this.player.getComponent('player');
+
+       
+        // self.node.on(cc.Node.EventType.TOUCH_MOVE, function (event) {}, self.node);
+        // self.node.on(cc.Node.EventType.TOUCH_END, function (event) {}, self.node);
+
+        // this.node.on(cc.Node.EventType.MOUSE_DOWN, );
+        // this.node.on(cc.Node.EventType.TOUCH_START, playa.playaMoveTouch, playa);
+        
+        this.line.getComponent('line').player = playa;
         this.line.getComponent('line').game = this;
+        playa.game = this;
+        
         for(var i = 0; i < this.numFood; i++){
             this.spawn(i);
         }
@@ -56,7 +67,6 @@ cc.Class({
         var ln = this.line.getComponent("line");
 
         fd.game = this;
-        pl.game = this;
         fd.line = ln;
         fd.player = pl;
         fd.id = id_num;
